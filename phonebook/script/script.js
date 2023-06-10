@@ -165,7 +165,12 @@ const data = [
         tr.phoneLink = phoneLink;
         tdPhone.append(phoneLink);
 
-        tr.append(tdDel, tdName, tdSurname, tdPhone);
+        const tdEdit = document.createElement('td');
+        const tdIcon = document.createElement('img');
+        tdIcon.classList.add('row-icon');
+        tdEdit.append(tdIcon);
+
+        tr.append(tdDel, tdName, tdSurname, tdPhone, tdEdit);
 
         return tr;
     };
@@ -175,8 +180,6 @@ const data = [
         elem.append(...allRow);
         return allRow;
     };
-
-
 
     const createFooter = () => {
         const footer = document.createElement('footer');

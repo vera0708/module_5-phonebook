@@ -47,7 +47,15 @@ body {
   margin-bottom: 30px;
 }
 
-
+.row-icon {
+  background-size: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(../img/icons_edit.svg);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
 
 .form {
   padding: 30px 50px;
@@ -66,7 +74,6 @@ body {
   z-index: 2;
 }
 
-
 .form-title {
   margin-top: 0;
   padding-bottom: 20px;
@@ -75,7 +82,6 @@ body {
 .form-label {
   width: 80px;
 }
-
 
 .form-overlay {
   background-color: rgba(0, 0, 0, 0.6);
