@@ -14,12 +14,27 @@
 
   <script src="phonebook/script/script.js" defer></script>
 
-  <script>document.addEventListener('DOMContentLoaded', () => {
-      phoneBookInit('#app', 'Полина');
-    })</script>
+  <script>
+  //document.addEventListener('DOMContentLoaded', () => {
+  //    phoneBookInit('#app', 'Полина');    })
+  </script>
+
+  <script src="phonebook/script/index.js" defer></script>
 </head>
 
 <body>
+
+  <div class="container">
+    <div class="btn-wrapper m-5">
+      <button class="btn-one btn-primary d-block mb-2" type="button">Клик</button>
+      <!-- <button class="btn-one btn-primary d-block mb-2" type="button" onclick="boom()">Клик</button> -->
+      <button class="btn-two btn-success d-block mb-2" type="button">Тык-тык</button>
+      <!-- <button class="btn-two btn-success d-block mb-2" type="button" onclick="console.log(this)">Тык-тык</button> -->
+      <a href="http://google.com" class="link">Перейти</a>
+      <!-- <a href="tel:89999999999" class="link">Позвонить</a> -->
+      <!-- <a href="mailto:hello@methed.ru" class="link">Отправить письмо</a> -->
+    </div>
+  </div>
   <div id="app"></div>
 </body>
 
