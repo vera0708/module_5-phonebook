@@ -1,5 +1,28 @@
 'use strict';
 
+const data = [
+    {
+        name: 'Иван',
+        surname: 'Петров',
+        phone: '+79514545454',
+    },
+    {
+        name: 'Игорь',
+        surname: 'Семёнов',
+        phone: '+79999999999',
+    },
+    {
+        name: 'Семён',
+        surname: 'Иванов',
+        phone: '+79800252525',
+    },
+    {
+        name: 'Мария',
+        surname: 'Попова',
+        phone: '+79876543210',
+    },
+];
+
 {
     const createContainer = () => {
         const container = document.createElement('div');
@@ -25,11 +48,8 @@
         return h1;
     };
 
-
     const createMain = () => {
         const main = document.createElement('main');
-
-
         const mainContainer = createContainer();
         main.append(mainContainer);
         main.mainContainer = mainContainer;
@@ -120,8 +140,58 @@
             form,
         }
     };
-    const init = (selectorApp, title) => {
-        const app = document.querySelector(selectorApp);
+
+    const createRow = ({ name: firstName, surname, phone }) => {
+
+        const tr = document.createElement('tr');
+
+        const tdDel = document.createElement('td');
+        tdDel.classList.add('delete');
+        const buttonDel = document.createElement('button');
+
+        buttonDel.classList.add('del-icon');
+        tdDel.append(buttonDel);
+
+        const tdName = document.createElement('td');
+        tdName.textContent = firstName;
+
+        const tdSurname = document.createElement('td');
+        tdSurname.textContent = surname;
+
+        const tdPhone = document.createElement('td');
+        const phoneLink = document.createElement('a');
+        phoneLink.href = `tel:${phone}`;
+        phoneLink.textContent = phone;
+        tdPhone.append(phoneLink);
+
+        tr.append(tdDel, tdName, tdSurname, tdPhone);
+
+        return tr;
+    };
+
+    const renderContacts = (elem, data) => {
+        const allRow = data.map(createRow);
+        elem.append(...allRow);
+    };
+
+    const createFooter = () => {
+        const footer = document.createElement('footer');
+        footer.classList.add('footer');
+
+        const footerContainer = createContainer();
+        footer.append(footerContainer);
+        footer.footerContainer = footerContainer;
+
+        return footer;
+    };
+
+    const createRights = (title) => {
+        const p = document.createElement('p');
+        p.textContent = `Все права защищены @${title}`;
+        return p;
+    };
+
+    const renderPhoneBook = (app, title) => {
         const header = createHeader();
         const logo = createLogo(title);
         const main = createMain();
@@ -140,15 +210,27 @@
 
         const table = createTable();
         const form = createForm();
+        const footer = createFooter();
+        const p = createRights(title);
 
         header.headerContainer.append(logo);
         main.mainContainer.append(buttonGroupe.btnWrapper, table, form.overlay);
+        footer.footerContainer.append(p);
+        app.append(header, main, footer);
 
-        app.append(header, main)
-
-
+        return {
+            list: table.tbody,
+        };
     };
 
+    const init = (selectorApp, title) => {
+        const app = document.querySelector(selectorApp);
+        const phoneBook = renderPhoneBook(app, title);
+        const { list } = phoneBook;
 
+        renderContacts(list, data);
+
+        //Функционал
+    };
     window.phoneBookInit = init;
 }
