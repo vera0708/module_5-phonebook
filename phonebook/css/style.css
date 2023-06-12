@@ -48,10 +48,12 @@ body {
 }
 
 .row-icon {
-  background-size: 20px;
+  background-size: contain;
+  background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(../img/icons_edit.svg);
+  border: none;
   width: 20px;
   height: 20px;
   cursor: pointer;
