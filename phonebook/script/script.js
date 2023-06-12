@@ -24,6 +24,11 @@ const data = [
 ];
 
 {
+    const addContactData = (contact) => {
+        data.push(contact);
+        console.log(data);
+    }
+
     const createContainer = () => {
         const container = document.createElement('div');
         container.classList.add('container');
@@ -33,11 +38,9 @@ const data = [
     const createHeader = () => {
         const header = document.createElement('header');
         header.classList.add('header');
-
         const headerContainer = createContainer();
         header.append(headerContainer);
         header.headerContainer = headerContainer;
-
         return header;
     };
 
@@ -53,7 +56,6 @@ const data = [
         const mainContainer = createContainer();
         main.append(mainContainer);
         main.mainContainer = mainContainer;
-
         return main;
     };
 
@@ -92,7 +94,6 @@ const data = [
         const tbody = document.createElement('tbody');
         table.append(thead, tbody);
         table.tbody = tbody;
-
         return table;
     };
 
@@ -149,14 +150,15 @@ const data = [
         const tdDel = document.createElement('td');
         tdDel.classList.add('delete');
         const buttonDel = document.createElement('button');
-
         buttonDel.classList.add('del-icon');
         tdDel.append(buttonDel);
 
         const tdName = document.createElement('td');
+        tdName.classList.add('name');
         tdName.textContent = firstName;
 
         const tdSurname = document.createElement('td');
+        tdSurname.classList.add('surname');
         tdSurname.textContent = surname;
 
         const tdPhone = document.createElement('td');
@@ -172,7 +174,6 @@ const data = [
         tdEdit.append(tdIcon);
 
         tr.append(tdDel, tdName, tdSurname, tdPhone, tdEdit);
-
         return tr;
     };
 
@@ -217,12 +218,12 @@ const data = [
         ]);
 
         const table = createTable();
-        const form = createForm();
+        const { form, overlay } = createForm();
         const footer = createFooter();
         const p = createRights(title);
 
         header.headerContainer.append(logo);
-        main.mainContainer.append(buttonGroupe.btnWrapper, table, form.overlay);
+        main.mainContainer.append(buttonGroupe.btnWrapper, table, overlay);
         footer.footerContainer.append(p);
         app.append(header, main, footer);
 
@@ -231,8 +232,8 @@ const data = [
             logo,
             btnAdd: buttonGroupe.btns[0],
             btnDel: buttonGroupe.btns[1],
-            formOverlay: form.overlay,
-            form: form.form,
+            formOverlay: overlay,
+            form,
         };
     };
 
@@ -248,47 +249,88 @@ const data = [
         });
     };
 
-    const init = (selectorApp, title) => {
-        const app = document.querySelector(selectorApp);
-        const phoneBook = renderPhoneBook(app, title);
-        const { list, logo, btnAdd, formOverlay, form, btnDel } = phoneBook;
+    const modalContol = (btnAdd, formOverlay) => {
+        const openModal = () => {
+            formOverlay.classList.add('is-visible');
+        };
 
-        const allRow = renderContacts(list, data);
-
-        hoverRow(allRow, logo);
+        const closeModal = () => {
+            formOverlay.classList.remove('is-visible');
+        };
 
         btnAdd.addEventListener('click', () => {
-            formOverlay.classList.add('is-visible');
+            openModal();
         });
 
         formOverlay.addEventListener('click', (e) => {
             const target = e.target;
             if (target === formOverlay ||
                 target.closest('.close')) {
-                formOverlay.classList.remove('is-visible');
+                closeModal();
             };
         });
 
+        return {
+            closeModal,
+        }
+    };
+
+    const deleteContol = (btnDel, list) => {
         btnDel.addEventListener('click', () => {
             document.querySelectorAll('.delete').forEach(del => {
                 del.classList.toggle('is-visible');
             });
         });
+
         list.addEventListener('click', (e) => {
             const target = e.target;
             if (target.closest('.del-icon')) {
                 target.closest('.contact').remove();
             };
         });
+    };
 
-        setTimeout(() => {
-            const contact = createRow({
-                name: 'Вера',
-                surname: 'Деева',
-                phone: '+79836503133',
-            });
-            list.append(contact);
-        }, 1000)
+    const addContactPage = (contact, list) => {
+        list.append(createRow(contact));
+    };
+
+    const formControl = (form, list, closeModal) => {
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            // Передаем данные из формы:
+            const formData = new FormData(e.target);
+            const newContact = Object.fromEntries(formData);
+            addContactPage(newContact, list);
+            addContactData(newContact);
+            // Очищаем форму для следующего заполненияЖ
+            form.reset();
+            closeModal();
+        })
+    };
+
+    const init = (selectorApp, title) => {
+        const app = document.querySelector(selectorApp);
+        const { list, logo, btnAdd, formOverlay, form, btnDel } = renderPhoneBook(app, title);
+
+        const allRow = renderContacts(list, data);
+        const { closeModal } = modalContol(btnAdd, formOverlay);
+        hoverRow(allRow, logo);
+
+        deleteContol(btnDel, list);
+        formControl(form, list, closeModal);
+
+        /*   const sortRows = (n) => {
+              return arr.from(list).sort();
+          }*/
+
+        /* setTimeout(() => {
+             const contact = createRow({
+                 name: 'Вера',
+                 surname: 'Деева',
+                 phone: '+79836503133',
+             });
+             list.append(contact);
+         }, 1000);*/
     };
 
     window.phoneBookInit = init;
