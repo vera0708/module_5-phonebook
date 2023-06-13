@@ -97,51 +97,6 @@ const data = [
         return table;
     };
 
-    const createForm = () => {
-        const overlay = document.createElement('div');
-        overlay.classList.add('form-overlay');
-
-        const form = document.createElement('form');
-        form.classList.add('form');
-        form.insertAdjacentHTML('beforeend', `
-        <button class="close" type="button"></button>
-        <h2 class="form-title">Добавить контакт</h2>
-        <div class="form-groupe">
-            <label class="form-label" for ="name">Имя:</label>
-            <input class="form-input" name="name" id="name" type="text" required> 
-        </div>
-        <div class="form-groupe">
-            <label class="form-label" for ="surname">Фамилия:</label>
-            <input class="form-input" name="surname" id="surname" type="text" required> 
-        </div>
-        <div class="form-groupe">
-            <label class="form-label" for ="phone">Телефон:</label>
-            <input class="form-input" name="phone" id="phone" type="number" required> 
-        </div>        
-        `);
-
-        const buttonGroupe = createButtonGroupe([
-            {
-                className: 'btn btn-primary mr-4 js-add',
-                type: 'submit',
-                text: 'Добавить',
-            },
-            {
-                className: 'btn btn-danger',
-                type: 'reset',
-                text: 'Отмена',
-            },
-        ]);
-
-        form.append(...buttonGroupe.btns);
-        overlay.append(form);
-
-        return {
-            overlay,
-            form,
-        }
-    };
-
     const createRow = ({ name: firstName, surname, phone }) => {
 
         const tr = document.createElement('tr');
@@ -198,6 +153,51 @@ const data = [
         const p = document.createElement('p');
         p.textContent = `Все права защищены @${title}`;
         return p;
+    };
+
+    const createForm = () => {
+        const overlay = document.createElement('div');
+        overlay.classList.add('form-overlay');
+
+        const form = document.createElement('form');
+        form.classList.add('form');
+        form.insertAdjacentHTML('beforeend', `
+        <button class="close" type="button"></button>
+        <h2 class="form-title">Добавить контакт</h2>
+        <div class="form-groupe">
+            <label class="form-label" for ="name">Имя:</label>
+            <input class="form-input" name="name" id="name" type="text" required> 
+        </div>
+        <div class="form-groupe">
+            <label class="form-label" for ="surname">Фамилия:</label>
+            <input class="form-input" name="surname" id="surname" type="text" required> 
+        </div>
+        <div class="form-groupe">
+            <label class="form-label" for ="phone">Телефон:</label>
+            <input class="form-input" name="phone" id="phone" type="number" required> 
+        </div>        
+        `);
+
+        const buttonGroupe = createButtonGroupe([
+            {
+                className: 'btn btn-primary mr-4 js-add',
+                type: 'submit',
+                text: 'Добавить',
+            },
+            {
+                className: 'btn btn-danger',
+                type: 'reset',
+                text: 'Отмена',
+            },
+        ]);
+
+        form.append(...buttonGroupe.btns);
+        overlay.append(form);
+
+        return {
+            overlay,
+            form,
+        }
     };
 
     const renderPhoneBook = (app, title) => {
@@ -290,6 +290,21 @@ const data = [
         });
     };
 
+    //Сортировка столбца:
+    /*   const sortRows = (index) => {
+      return arr.from(list).sort(row1, row2);
+  }*/
+    /* list.addEventListener('click', (e) => {
+         const target = e.target;
+         if (target === data.name) {
+             index = 1;
+         }
+         if (target === data.surname) {
+             index = 2;
+         }
+         sortRows(index);
+     });
+ */
     const addContactPage = (contact, list) => {
         list.append(createRow(contact));
     };
@@ -319,9 +334,6 @@ const data = [
         deleteContol(btnDel, list);
         formControl(form, list, closeModal);
 
-        /*   const sortRows = (n) => {
-              return arr.from(list).sort();
-          }*/
 
         /* setTimeout(() => {
              const contact = createRow({
