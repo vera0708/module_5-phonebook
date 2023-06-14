@@ -290,21 +290,35 @@ const data = [
         });
     };
 
-    //Сортировка столбца:
-    /*   const sortRows = (index) => {
-      return arr.from(list).sort(row1, row2);
-  }*/
-    /* list.addEventListener('click', (e) => {
-         const target = e.target;
-         if (target === data.name) {
-             index = 1;
-         }
-         if (target === data.surname) {
-             index = 2;
-         }
-         sortRows(index);
-     });
- */
+    const sortbyThead = (allRow) => {
+        //Сортировка столбца:
+        const sortRows = (field) => {
+            return (a, b) => a[field] > b[field] ? 1 : -1;
+        }
+        const thead = document.getElementsByTagName('th');
+        console.log('thead:', thead);
+        for (let i = 0; i < thead.length; i++) {
+            thead[i].addEventListener('click', (e) => {
+                const target = e.target;
+                console.log('target:', target);
+                if (target.textContent === 'Имя') {
+                    console.log('allRow', allRow);
+                    let sortedRows = data.sort(sortRows('name'));
+                    console.log('sortedRows', sortedRows);
+                    thead.append(...sortedRows);
+
+                }
+                if (target.textContent === 'Фамилия') {
+                    console.log('allRow', allRow);
+                    let sortedRows = data.sort(sortRows('surname'));
+                    console.log('sortedRows', sortedRows);
+                    thead.append(...sortedRows);
+                };
+            });
+        };
+    };
+
+
     const addContactPage = (contact, list) => {
         list.append(createRow(contact));
     };
@@ -333,7 +347,7 @@ const data = [
 
         deleteContol(btnDel, list);
         formControl(form, list, closeModal);
-
+        sortbyThead(allRow);
 
         /* setTimeout(() => {
              const contact = createRow({
