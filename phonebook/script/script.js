@@ -228,6 +228,7 @@ const data = [
         app.append(header, main, footer);
 
         return {
+            thead: table.thead,
             list: table.tbody,
             logo,
             btnAdd: buttonGroupe.btns[0],
@@ -290,34 +291,33 @@ const data = [
         });
     };
 
-    const sortbyThead = (allRow) => {
-        //Сортировка столбца:
-        const sortRows = (field) => {
-            return (a, b) => a[field] > b[field] ? 1 : -1;
-        }
-        const thead = document.getElementsByTagName('th');
-        console.log('thead:', thead);
-        for (let i = 0; i < thead.length; i++) {
-            thead[i].addEventListener('click', (e) => {
-                const target = e.target;
-                console.log('target:', target);
-                if (target.textContent === 'Имя') {
-                    console.log('allRow', allRow);
-                    let sortedRows = data.sort(sortRows('name'));
-                    console.log('sortedRows', sortedRows);
-                    thead.append(...sortedRows);
+    // const sortbyThead = (allRow) => {
+    //     //Сортировка столбца:
+    //     const sortRows = (field) => {
+    //         return (a, b) => a[field] > b[field] ? 1 : -1;
+    //     }
+    //     const thead = document.getElementsByTagName('th');
+    //     console.log('thead:', thead);
+    //     for (let i = 0; i < thead.length; i++) {
+    //         thead[i].addEventListener('click', (e) => {
+    //             const target = e.target;
+    //             console.log('target:', target);
+    //             if (target.textContent === 'Имя') {
+    //                 console.log('allRow', allRow);
+    //                 let sortedRows = data.sort(sortRows('name'));
+    //                 console.log('sortedRows', sortedRows);
+    //                 thead.append(...sortedRows);
 
-                }
-                if (target.textContent === 'Фамилия') {
-                    console.log('allRow', allRow);
-                    let sortedRows = data.sort(sortRows('surname'));
-                    console.log('sortedRows', sortedRows);
-                    thead.append(...sortedRows);
-                };
-            });
-        };
-    };
-
+    //             }
+    //             if (target.textContent === 'Фамилия') {
+    //                 console.log('allRow', allRow);
+    //                 let sortedRows = data.sort(sortRows('surname'));
+    //                 console.log('sortedRows', sortedRows);
+    //                 thead.append(...sortedRows);
+    //             };
+    //         });
+    //     };
+    // };
 
     const addContactPage = (contact, list) => {
         list.append(createRow(contact));
@@ -339,7 +339,7 @@ const data = [
 
     const init = (selectorApp, title) => {
         const app = document.querySelector(selectorApp);
-        const { list, logo, btnAdd, formOverlay, form, btnDel } = renderPhoneBook(app, title);
+        const { list, logo, btnAdd, formOverlay, form, btnDel, thead } = renderPhoneBook(app, title);
 
         const allRow = renderContacts(list, data);
         const { closeModal } = modalContol(btnAdd, formOverlay);
@@ -347,7 +347,7 @@ const data = [
 
         deleteContol(btnDel, list);
         formControl(form, list, closeModal);
-        sortbyThead(allRow);
+        // sortbyThead(allRow);
 
         /* setTimeout(() => {
              const contact = createRow({
@@ -357,6 +357,18 @@ const data = [
              });
              list.append(contact);
          }, 1000);*/
+
+        thead.addEventListener('click', e => {
+            const target = e.target;
+            if (target.textContent === 'Имя') {
+                let sortedRows = Array.from(list.rows).sort((rowA, rowB) => rowA.cells[1].innerHTML > rowB.cells[1].innerHTML ? 1 : -1);
+                list.append(...sortedRows);
+            }
+            if (target.textContent === 'Фамилия') {
+                let sortedRows = Array.from(list.rows).sort((rowA, rowB) => rowA.cells[2].innerHTML > rowB.cells[2].innerHTML ? 1 : -1);
+                list.append(...sortedRows);
+            };
+        })
     };
 
     window.phoneBookInit = init;
