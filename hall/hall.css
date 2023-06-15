@@ -23,3 +23,9 @@
     height: 20px;
     background-color: brown;
 }
+
+.fieldset-radio,
+.fieldset-checkbox {
+    display: flex;
+    flex-direction: column;
+}
