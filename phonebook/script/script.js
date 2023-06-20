@@ -310,26 +310,7 @@ const data = [
         })
     };
 
-    const init = (selectorApp, title) => {
-        const app = document.querySelector(selectorApp);
-        const { list, logo, btnAdd, formOverlay, form, btnDel, thead } = renderPhoneBook(app, title);
-
-        const allRow = renderContacts(list, data);
-        const { closeModal } = modalContol(btnAdd, formOverlay);
-        hoverRow(allRow, logo);
-
-        deleteContol(btnDel, list);
-        formControl(form, list, closeModal);
-
-        /* setTimeout(() => {
-             const contact = createRow({
-                 name: 'Вера',
-                 surname: 'Деева',
-                 phone: '+79836503133',
-             });
-             list.append(contact);
-         }, 1000);*/
-
+    const sortRows = (thead, list) => {
         thead.addEventListener('click', e => {
             const target = e.target;
             if (target.textContent === 'Имя') {
@@ -341,6 +322,29 @@ const data = [
                 list.append(...sortedRows);
             };
         });
+    }
+
+    const init = (selectorApp, title) => {
+        const app = document.querySelector(selectorApp);
+        const { list, logo, btnAdd, formOverlay, form, btnDel, thead } = renderPhoneBook(app, title);
+
+        const allRow = renderContacts(list, data);
+        const { closeModal } = modalContol(btnAdd, formOverlay);
+        hoverRow(allRow, logo);
+
+        deleteContol(btnDel, list);
+        formControl(form, list, closeModal);
+
+        sortRows(thead, list);
+
+        /* setTimeout(() => {
+             const contact = createRow({
+                 name: 'Вера',
+                 surname: 'Деева',
+                 phone: '+79836503133',
+             });
+             list.append(contact);
+         }, 1000);*/
     };
 
     window.phoneBookInit = init;
