@@ -26,7 +26,7 @@ const data = [
 {
     const addContactData = (contact) => {
         data.push(contact);
-        setSorage();
+        setStorage();
         console.log(data);
     }
 
@@ -220,15 +220,15 @@ const data = [
         ]);
 
         const table = createTable();
-        const { form, overlay } = createForm();
         const footer = createFooter();
         const p = createRights(title);
+        const { form, overlay } = createForm();
 
+        getStorage();
         header.headerContainer.append(logo);
         main.mainContainer.append(buttonGroupe.btnWrapper, table, overlay);
         footer.footerContainer.append(p);
         app.append(header, main, footer);
-        setSorage();
 
         return {
             thead: table.thead,
@@ -306,7 +306,6 @@ const data = [
             const newContact = Object.fromEntries(formData);
             addContactPage(newContact, list);
             addContactData(newContact);
-            setSorage();
             // Очищаем форму для следующего заполненияЖ
             form.reset();
             closeModal();
@@ -327,14 +326,14 @@ const data = [
         });
     };
 
-    const getSorage = () => {
+    const getStorage = () => {
         if (localStorage.getItem('phonebook')) {
             return JSON.parse(localStorage.getItem('phonebook'));
         }
         return [];
     };
 
-    const setSorage = () => {
+    const setStorage = () => {
         localStorage.setItem('phonebook', JSON.stringify(data));
     };
 
