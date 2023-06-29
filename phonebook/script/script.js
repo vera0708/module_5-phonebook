@@ -394,4 +394,9 @@ let data = [
     };
 
     window.phoneBookInit = init;
-}
+};
+
+window.addEventListener('storage', e => {
+    console.log(e);
+    init()
+})
