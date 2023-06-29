@@ -322,7 +322,7 @@ let data = [
         if (thname === 'Имя') {
             let sortedRows = Array.from(list.rows).sort((rowA, rowB) => rowA.cells[1].innerHTML > rowB.cells[1].innerHTML ? 1 : -1);
             list.append(...sortedRows);
-            // setStorageToItem('sort', thname)
+
         }
         if (thname === 'Фамилия') {
             let sortedRows = Array.from(list.rows).sort((rowA, rowB) => rowA.cells[2].innerHTML > rowB.cells[2].innerHTML ? 1 : -1);
@@ -335,14 +335,6 @@ let data = [
         thead.addEventListener('click', e => {
             const target = e.target;
             getSorted(target.textContent, list);
-            // if (target.textContent === 'Имя') {
-            //     let sortedRows = Array.from(list.rows).sort((rowA, rowB) => rowA.cells[1].innerHTML > rowB.cells[1].innerHTML ? 1 : -1);
-            //     list.append(...sortedRows);
-            // }
-            // if (target.textContent === 'Фамилия') {
-            //     let sortedRows = Array.from(list.rows).sort((rowA, rowB) => rowA.cells[2].innerHTML > rowB.cells[2].innerHTML ? 1 : -1);
-            //     list.append(...sortedRows);
-            // };
         });
     };
 
