@@ -1,32 +1,32 @@
 'use strict';
 
-const data = [
-    {
-        name: 'Иван',
-        surname: 'Петров',
-        phone: '+79514545454',
-    },
-    {
-        name: 'Игорь',
-        surname: 'Семёнов',
-        phone: '+79999999999',
-    },
-    {
-        name: 'Семён',
-        surname: 'Иванов',
-        phone: '+79800252525',
-    },
-    {
-        name: 'Мария',
-        surname: 'Попова',
-        phone: '+79876543210',
-    },
+let data = [
+    // {
+    //     name: 'Иван',
+    //     surname: 'Петров',
+    //     phone: '+79514545454',
+    // },
+    // {
+    //     name: 'Игорь',
+    //     surname: 'Семёнов',
+    //     phone: '+79999999999',
+    // },
+    // {
+    //     name: 'Семён',
+    //     surname: 'Иванов',
+    //     phone: '+79800252525',
+    // },
+    // {
+    //     name: 'Мария',
+    //     surname: 'Попова',
+    //     phone: '+79876543210',
+    // },
 ];
 
 {
     const addContactData = (contact) => {
         data.push(contact);
-        setStorage();
+        setStorage('phonebook', data);
         console.log(data);
     }
 
@@ -203,6 +203,8 @@ const data = [
     };
 
     const renderPhoneBook = (app, title) => {
+        data = getStorage('phonebook');
+
         const header = createHeader();
         const logo = createLogo(title);
         const main = createMain();
@@ -224,7 +226,6 @@ const data = [
         const p = createRights(title);
         const { form, overlay } = createForm();
 
-        getStorage();
         header.headerContainer.append(logo);
         main.mainContainer.append(buttonGroupe.btnWrapper, table, overlay);
         footer.footerContainer.append(p);
@@ -288,7 +289,12 @@ const data = [
 
         list.addEventListener('click', (e) => {
             const target = e.target;
-            if (target.closest('.del-icon')) {
+            const delIcon = target.closest('.del-icon');
+            if (delIcon) {
+                const contact = delIcon.closest('.contact');
+                const phone = contact.phoneLink.textContent;
+                console.log(phone);
+                removeStorage(phone);
                 target.closest('.contact').remove();
             };
         });
@@ -326,24 +332,20 @@ const data = [
         });
     };
 
-    const getStorage = () => {
-        if (localStorage.getItem('phonebook')) {
-            return JSON.parse(localStorage.getItem('phonebook'));
+    const getStorage = (key) => {
+        if (localStorage.getItem(key)) {
+            return JSON.parse(localStorage.getItem(key));
         }
         return [];
     };
 
-    const setStorage = () => {
-        localStorage.setItem('phonebook', JSON.stringify(data));
+    const setStorage = (key, obj) => {
+        localStorage.setItem(key, JSON.stringify(obj));
     };
 
     const removeStorage = (phone) => {
-        list.addEventListener('click', (e) => {
-            const target = e.target;
-            if (target === phone) {
-                localStorage.removeItem(contact);
-            };
-        });
+        const filteredData = data.filter(contact => contact.phone !== phone)
+        setStorage('phonebook', filteredData);
     }
 
     const init = (selectorApp, title) => {
