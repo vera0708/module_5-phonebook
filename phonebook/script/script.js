@@ -1,7 +1,8 @@
 import { deleteContol, formControl, modalContol } from "./control.js";
 import { renderContacts, renderPhoneBook } from "./renders.js";
 import { makeSort, sortRows } from "./sorting.js";
-import { setData, getData } from './data.js';
+import { getData } from './data.js';
+import hoverRow from "./hover.js";
 
 // export let data = [];
 
@@ -14,23 +15,23 @@ import { setData, getData } from './data.js';
 // };
 
 {
-    const hoverRow = (allRow, logo) => {
-        const text = logo.textContent;
-        allRow.forEach(contact => {
-            contact.addEventListener('mouseenter', () => {
-                logo.textContent = contact.phoneLink.textContent;
-            });
-            contact.addEventListener('mouseleave', () => {
-                logo.textContent = text;
-            });
-        });
-    };
+    // const hoverRow = (allRow, logo) => {
+    //     const text = logo.textContent;
+    //     allRow.forEach(contact => {
+    //         contact.addEventListener('mouseenter', () => {
+    //             logo.textContent = contact.phoneLink.textContent;
+    //         });
+    //         contact.addEventListener('mouseleave', () => {
+    //             logo.textContent = text;
+    //         });
+    //     });
+    // };
 
     const init = (selectorApp, title) => {
         const app = document.querySelector(selectorApp);
         const { list, logo, btnAdd, formOverlay, form, btnDel, thead } = renderPhoneBook(app, title);
 
-        const allRow = renderContacts(list, setData([]));
+        const allRow = renderContacts(list, getData());
         const { closeModal } = modalContol(btnAdd, formOverlay);
         hoverRow(allRow, logo);
 

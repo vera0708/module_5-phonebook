@@ -17,6 +17,10 @@ export const addContactData = (contact) => {
     console.log(data);
 };
 
+export const removeContact = (contact) => {
+    data = data.filter(cont => contact !== cont.phone);
+};
+
 export const addContactPage = (contact, list) => {
     list.append(createRow(contact));
 };

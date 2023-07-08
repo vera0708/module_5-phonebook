@@ -1,4 +1,4 @@
-import { setData, getData } from './data.js';
+import { setData } from './data.js';
 import { getStorage } from "./serviceStorage.js";
 import {
     createButtonGroupe,
@@ -13,7 +13,7 @@ import {
 } from "./createElements.js";
 
 export const renderContacts = (elem, data) => {
-    const allRow = getData().map(createRow);
+    const allRow = data.map(createRow);
     elem.append(...allRow);
     return allRow;
 };

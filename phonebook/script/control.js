@@ -1,4 +1,4 @@
-import { addContactData, addContactPage } from "./data.js";
+import { addContactData, addContactPage, removeContact } from "./data.js";
 import { removeStorage } from "./serviceStorage.js";
 
 export const modalContol = (btnAdd, formOverlay) => {
@@ -40,7 +40,7 @@ export const deleteContol = (btnDel, list) => {
         if (delIcon) {
             const contact = delIcon.closest('.contact');
             const phone = contact.phoneLink.textContent;
-            console.log(phone);
+            removeContact(phone);
             removeStorage(phone);
             target.closest('.contact').remove();
         };
