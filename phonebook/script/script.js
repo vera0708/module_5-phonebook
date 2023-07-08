@@ -1,6 +1,6 @@
 import { deleteContol, formControl, modalContol } from "./control.js";
 import { renderContacts, renderPhoneBook } from "./renders.js";
-import { makeSort, sortRows } from "./sorting.js";
+import * as sortModule from "./sorting.js";
 import { getData } from './data.js';
 import hoverRow from "./hover.js";
 
@@ -38,8 +38,8 @@ import hoverRow from "./hover.js";
         deleteContol(btnDel, list);
         formControl(form, list, closeModal);
 
-        sortRows(thead, list);
-        makeSort(list);
+        sortModule.sortRows(thead, list);
+        sortModule.makeSort(list);
 
         /* setTimeout(() => {
              const contact = createRow({
