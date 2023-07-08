@@ -4,29 +4,7 @@ import * as sortModule from "./sorting.js";
 import { getData } from './data.js';
 import hoverRow from "./hover.js";
 
-// export let data = [];
-
-// export const setData = (value) => {
-//     data = value;
-// };
-
-// export const getData = () => {
-//     return data;
-// };
-
 {
-    // const hoverRow = (allRow, logo) => {
-    //     const text = logo.textContent;
-    //     allRow.forEach(contact => {
-    //         contact.addEventListener('mouseenter', () => {
-    //             logo.textContent = contact.phoneLink.textContent;
-    //         });
-    //         contact.addEventListener('mouseleave', () => {
-    //             logo.textContent = text;
-    //         });
-    //     });
-    // };
-
     const init = (selectorApp, title) => {
         const app = document.querySelector(selectorApp);
         const { list, logo, btnAdd, formOverlay, form, btnDel, thead } = renderPhoneBook(app, title);
@@ -40,15 +18,6 @@ import hoverRow from "./hover.js";
 
         sortModule.sortRows(thead, list);
         sortModule.makeSort(list);
-
-        /* setTimeout(() => {
-             const contact = createRow({
-                 name: 'Вера',
-                 surname: 'Деева',
-                 phone: '+79836503133',
-             });
-             list.append(contact);
-         }, 1000);*/
     };
 
     window.phoneBookInit = init;

@@ -50,12 +50,10 @@ export const deleteContol = (btnDel, list) => {
 export const formControl = (form, list, closeModal) => {
     form.addEventListener('submit', e => {
         e.preventDefault();
-        // Передаем данные из формы:
         const formData = new FormData(e.target);
         const newContact = Object.fromEntries(formData);
         addContactPage(newContact, list);
         addContactData(newContact);
-        // Очищаем форму для следующего заполненияЖ
         form.reset();
         closeModal();
     })
